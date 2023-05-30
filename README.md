@@ -86,3 +86,8 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
    3. Create Store, actions, constant
    4. Create Set Order Type Action
    5. Redirect user to order screen
+4. Create backend api for categories
+   1. install express and nodemon
+   2. create server.js
+   3. create data.js with sample data
+   4. return categories
