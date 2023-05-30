@@ -3,12 +3,15 @@ import { useStyles } from '../styles';
 import { Box, Card, CardActionArea, Typography } from '@material-ui/core';
 import TouchAppIcon from '@material-ui/icons/TouchApp';
 import Logo from '../components/Logo';
+import { useNavigate } from 'react-router-dom';
 
 const HomeScreen = () => {
   const styles = useStyles();
+  const navigate = useNavigate();
+  
   return (
     <Card>
-      <CardActionArea>
+      <CardActionArea onClick={() => navigate('/choose')}>
         <Box className={[styles.root, styles.red]}>
           <Box className={[styles.main, styles.center]}>
             <Typography component="h6" variant="h6">
