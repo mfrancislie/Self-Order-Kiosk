@@ -80,3 +80,9 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
    5. create styles.js
    6. create components/Logo.js
    7. create screens/HomeScreen.js
+3. Create choose order type screen
+   1. Create Choose Order Screen
+   2. Create React Context
+   3. Create Store, actions, constant
+   4. Create Set Order Type Action
+   5. Redirect user to order screen
