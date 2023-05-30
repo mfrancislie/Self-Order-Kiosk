@@ -68,3 +68,15 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+# Lessons
+
+1. Introduction
+2. Create home screen
+   1. install vs code and chrome
+   2. install material UI
+   3. crate react app
+   4. public folder/images/logo.png
+   5. create styles.js
+   6. create components/Logo.js
+   7. create screens/HomeScreen.js
