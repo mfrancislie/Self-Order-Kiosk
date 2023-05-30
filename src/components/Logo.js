@@ -1,13 +1,13 @@
 import React from 'react';
 import { useStyles } from '../styles';
 
-const Logo = () => {
+const Logo = (props) => {
   const styles = useStyles();
   return (
     <img
       src="/images/logo.png"
       alt="Food order"
-      className={styles.largeLogo}
+      className={props.large ? styles.largeLogo : styles.logo}
     ></img>
   );
 };
