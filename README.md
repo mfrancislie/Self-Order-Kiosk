@@ -36,3 +36,8 @@ Heroku to deploy your web application on cloud servers
    2. get categoryList from context
    3. list categories in use effect
    4. show categories in left side
+6. Create backend api for products
+   1. connect to mongodb and use mongoose
+   2. create product model
+   3. seed products
+   4. create api for products
