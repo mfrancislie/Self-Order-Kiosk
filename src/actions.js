@@ -6,6 +6,7 @@ import {
   ORDER_ADD_ITEM,
   ORDER_CLEAR,
   ORDER_REMOVE_ITEM,
+  ORDER_SET_PAYMENT_TYPE,
   ORDER_SET_TYPE,
   PRODUCT_LIST_FAIL,
   PRODUCT_LIST_REQUEST,
@@ -68,5 +69,12 @@ export const removeFromOrder = async (dispatch, item) => {
 export const clearOrder = async (dispatch) => {
   return dispatch({
     type: ORDER_CLEAR,
+  });
+};
+
+export const setPaymentType = async (dispatch, paymentType) => {
+  return dispatch({
+    type: ORDER_SET_PAYMENT_TYPE,
+    payload: paymentType,
   });
 };
