@@ -49,3 +49,7 @@ Heroku to deploy your web application on cloud servers
    4. create my order section
    5. handle cancel order
    6. handle finish order
+9. Create review order screen
+   1. Create review screen
+   2. add or remove items
+   3. cancel or proceed to checkout

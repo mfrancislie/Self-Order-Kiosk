@@ -13,6 +13,11 @@ export const useStyles = makeStyles(() => ({
     backgroundColor: '#ff2040',
     color: '#ffffff',
   },
+  img: {
+    height: 70,
+    width: 70,
+  },
+
   main: {
     flex: 1,
     overflow: 'auto',
