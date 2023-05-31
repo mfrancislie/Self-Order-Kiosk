@@ -53,3 +53,8 @@ Heroku to deploy your web application on cloud servers
    1. Create review screen
    2. add or remove items
    3. cancel or proceed to checkout
+10. Create select payment screen
+    1. Create select screen
+    2. show payment options
+    3. create payment screen
+    4. redirect to complete screen

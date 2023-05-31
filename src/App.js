@@ -10,6 +10,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ChooseScreen from './screens/ChooseScreen';
 import OrderScreen from './screens/OrderScreen';
 import ReviewScreen from './screens/ReviewScreen';
+import SelectPaymentScreen from './screens/SelectPaymentScreen';
+import PaymentScreen from './screens/PaymentScreen';
 
 function App() {
   const theme = createTheme({
@@ -45,6 +47,12 @@ function App() {
               <Route path="/choose" element={<ChooseScreen />} exact={true} />
               <Route path="/order" element={<OrderScreen />} exact={true} />
               <Route path="/review" element={<ReviewScreen />} exact={true} />
+              <Route path="/payment" element={<PaymentScreen />} exact={true} />
+              <Route
+                path="/selectPayment"
+                element={<SelectPaymentScreen />}
+                exact={true}
+              />
             </Routes>
           </Paper>
         </Container>

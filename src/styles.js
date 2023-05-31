@@ -14,8 +14,8 @@ export const useStyles = makeStyles(() => ({
     color: '#ffffff',
   },
   img: {
-    height: 70,
-    width: 70,
+    height: 50,
+    width: 50,
   },
 
   main: {
