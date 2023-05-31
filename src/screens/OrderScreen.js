@@ -81,7 +81,7 @@ const OrderScreen = () => {
   };
 
   const previewOrderHandler = () => {
-    navigate(`/preview`);
+    navigate(`/review`);
   };
 
   return (
