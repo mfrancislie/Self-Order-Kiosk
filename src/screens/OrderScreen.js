@@ -1,26 +1,44 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useStyles } from '../styles';
-import { listCategories, listProducts } from '../actions';
+import {
+  addToOrder,
+  clearOrder,
+  listCategories,
+  listProducts,
+  removeFromOrder,
+} from '../actions';
 import {
   Avatar,
   Box,
+  Button,
   Card,
   CardActionArea,
   CardContent,
   CardMedia,
   CircularProgress,
+  Dialog,
+  DialogTitle,
   Grid,
   List,
   ListItem,
+  TextField,
   Typography,
 } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import Logo from '../components/Logo';
 import { Store } from '../Store';
+import { AddCircleOutline, RemoveCircleOutline } from '@material-ui/icons';
+import { useNavigate } from 'react-router-dom';
 
 const OrderScreen = () => {
+  const navigate = useNavigate();
   const styles = useStyles();
   const [categoryName, setCategoryName] = useState('');
+
+  const [quantity, setQuantity] = useState(1);
+  const [isOpen, setIsOpen] = useState(false);
+  const [product, setProduct] = useState({});
+
   const { state, dispatch } = useContext(Store);
   const { loading, categories, error } = state.categoryList;
   const {
@@ -28,6 +46,8 @@ const OrderScreen = () => {
     loading: loadingProducts,
     error: errorProducts,
   } = state.productList;
+  const { orderItems, itemsCount, totalPrice, taxPrice, orderType } =
+    state.order;
 
   useEffect(() => {
     if (!categories) {
@@ -42,8 +62,94 @@ const OrderScreen = () => {
     listProducts(dispatch, categoryName);
   };
 
+  const closeHandler = () => {
+    setIsOpen(false);
+  };
+
+  const productClickHandler = (p) => {
+    setProduct(p);
+    setIsOpen(true);
+  };
+
+  const addToOrderHandler = () => {
+    addToOrder(dispatch, { ...product, quantity });
+    setIsOpen(false);
+  };
+  const cancelOrRemoveFromOrder = () => {
+    removeFromOrder(dispatch, product);
+    setIsOpen(false);
+  };
+
+  const previewOrderHandler = () => {
+    navigate(`/preview`);
+  };
+
   return (
     <Box className={styles.root}>
+      {/* modal */}
+      <Dialog
+        maxWidth="sm"
+        fullWidth={true}
+        open={isOpen}
+        onClose={closeHandler}
+      >
+        <DialogTitle className={styles.center}>Add {product.name}</DialogTitle>
+        <Box className={[styles.row, styles.center]}>
+          <Button
+            variant="contained"
+            color="primary"
+            disabled={quantity === 1}
+            onClick={(e) => quantity > 1 && setQuantity(quantity - 1)}
+          >
+            <RemoveCircleOutline />
+          </Button>
+          <TextField
+            inputProps={{ className: styles.largeInput }}
+            InputProps={{
+              bar: true,
+              inputProps: {
+                className: styles.largeInput,
+              },
+            }}
+            className={styles.largeNumber}
+            type="number"
+            variant="filled"
+            min={1}
+            value={quantity}
+          />
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={(e) => setQuantity(quantity + 1)}
+          >
+            <AddCircleOutline />
+          </Button>
+        </Box>
+        <Box className={[styles.row, styles.around]}>
+          <Button
+            onClick={cancelOrRemoveFromOrder}
+            variant="contained"
+            color="primary"
+            size="large"
+            className={styles.largeButton}
+          >
+            {orderItems.find((x) => x.name === product.name)
+              ? 'Remove From Order'
+              : 'Cancel'}
+          </Button>
+
+          <Button
+            onClick={addToOrderHandler}
+            variant="contained"
+            color="primary"
+            size="large"
+            className={styles.largeButton}
+          >
+            ADD To Order
+          </Button>
+        </Box>
+      </Dialog>
+      {/* modal end */}
       <Box className={styles.main}>
         <Grid container>
           <Grid item md={2}>
@@ -87,7 +193,10 @@ const OrderScreen = () => {
               ) : (
                 products.map((product) => (
                   <Grid item md={6}>
-                    <Card className={styles.card}>
+                    <Card
+                      className={styles.card}
+                      onClick={() => productClickHandler(product)}
+                    >
                       <CardActionArea>
                         <CardMedia
                           component="img"
@@ -130,6 +239,38 @@ const OrderScreen = () => {
           </Grid>
         </Grid>
       </Box>
+      {/* footer */}
+      <Box>
+        <Box>
+          <Box className={[styles.bordered, styles.space]}>
+            My Order - {orderType} | Tax: ${taxPrice} | Total: ${totalPrice} |
+            Items: {itemsCount}
+          </Box>
+          <Box className={[styles.row, styles.around]}>
+            <Button
+              onClick={() => {
+                clearOrder(dispatch);
+                navigate(`/choose`);
+              }}
+              variant="contained"
+              color="primary"
+              className={styles.largeButton}
+            >
+              Cancel Order
+            </Button>
+            <Button
+              onClick={previewOrderHandler}
+              variant="contained"
+              color="primary"
+              disabled={orderItems.length === 0}
+              className={styles.largeButton}
+            >
+              Done
+            </Button>
+          </Box>
+        </Box>
+      </Box>
+      {/* end-footer */}
     </Box>
   );
 };
