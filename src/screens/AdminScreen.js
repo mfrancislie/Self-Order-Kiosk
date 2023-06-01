@@ -39,27 +39,29 @@ const AdminScreen = () => {
   return (
     <Box className={[styles.root]}>
       <Box className={[styles.main]}>
-        {loading ? (
-          <CircularProgress />
-        ) : error ? (
-          <Alert severity="error">{error}</Alert>
-        ) : (
-          <TableContainer>
-            <Table aria-label="Orders">
-              <TableHead>
-                <TableRow>
-                  <TableCell>Order Number</TableCell>
-                  <TableCell align="right">Price&nbsp;($)</TableCell>
-                  <TableCell align="right">Count</TableCell>
-                  <TableCell align="right">Items</TableCell>
-                  <TableCell align="right">Type</TableCell>
-                  <TableCell align="right">Payment</TableCell>
-                  <TableCell align="right">State</TableCell>
-                  <TableCell align="right">Actions</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {orders.map((order) => (
+        <TableContainer>
+          <Table aria-label="Orders">
+            <TableHead>
+              <TableRow>
+                <TableCell>Order Number</TableCell>
+                <TableCell align="right">Price&nbsp;($)</TableCell>
+                <TableCell align="right">Count</TableCell>
+                <TableCell align="right">Items</TableCell>
+                <TableCell align="right">Type</TableCell>
+                <TableCell align="right">Payment</TableCell>
+                <TableCell align="right">State</TableCell>
+                <TableCell align="right">Actions</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {loading ? (
+                <CircularProgress />
+              ) : error ? (
+                <Alert severity="error">{error}</Alert>
+              ) : orders.length === 0 ? (
+                <Alert severity="error">Empty Orders</Alert>
+              ) : (
+                orders.map((order) => (
                   <TableRow key={order.name}>
                     <TableCell component="th" scope="row">
                       {order.number}
@@ -109,11 +111,11 @@ const AdminScreen = () => {
                       </Button>
                     </TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        )}
+                ))
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </Box>
     </Box>
   );
