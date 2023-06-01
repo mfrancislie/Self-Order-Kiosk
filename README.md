@@ -58,3 +58,7 @@ Heroku to deploy your web application on cloud servers
     2. show payment options
     3. create payment screen
     4. redirect to complete screen
+11. Complete order
+    1. create order model
+    2. build backend api
+    3. create complete order screen
