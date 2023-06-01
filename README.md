@@ -62,3 +62,7 @@ Heroku to deploy your web application on cloud servers
     1. create order model
     2. build backend api
     3. create complete order screen
+12. Create Admin Screen
+    1. build list order api
+    2. show order in the screen
+    3. create ready, cancel and deliver button

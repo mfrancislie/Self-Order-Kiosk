@@ -13,8 +13,13 @@ import ReviewScreen from './screens/ReviewScreen';
 import SelectPaymentScreen from './screens/SelectPaymentScreen';
 import PaymentScreen from './screens/PaymentScreen';
 import CompleteOrderScreen from './screens/CompleteOrderScreen';
+import AdminScreen from './screens/AdminScreen';
+import { useContext } from 'react';
+import { Store } from './Store';
 
 function App() {
+  const { state } = useContext(Store);
+
   const theme = createTheme({
     typography: {
       h1: { fontWeight: 'bold' },
@@ -41,7 +46,7 @@ function App() {
     <BrowserRouter>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Container maxWidth="sm">
+        <Container maxWidth={state.widthScreen ? 'lg' : 'sm'}>
           <Paper>
             <Routes>
               <Route path="/" element={<HomeScreen />} exact={true} />
@@ -49,7 +54,12 @@ function App() {
               <Route path="/order" element={<OrderScreen />} exact={true} />
               <Route path="/review" element={<ReviewScreen />} exact={true} />
               <Route path="/payment" element={<PaymentScreen />} exact={true} />
-              <Route path="/complete" element={<CompleteOrderScreen />} exact={true} />
+              <Route path="/admin" element={<AdminScreen />} exact={true} />
+              <Route
+                path="/complete"
+                element={<CompleteOrderScreen />}
+                exact={true}
+              />
               <Route
                 path="/selectPayment"
                 element={<SelectPaymentScreen />}
