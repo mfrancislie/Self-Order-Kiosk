@@ -94,6 +94,31 @@ app.post('/api/orders', async (req, res) => {
   res.send(order);
 });
 
+// admin part to manage orders
+app.get('/api/orders', async (req, res) => {
+  const orders = await Order.find({ isDelivered: false, isCanceled: false });
+  res.send(orders);
+});
+
+app.put('/api/orders/:id', async (req, res) => {
+  const order = await Order.findById(req.params.id);
+  if (order) {
+    if (req.body.action === 'ready') {
+      order.isReady = true;
+      order.inProgress = false;
+    } else if (req.body.action === 'deliver') {
+      order.isDelivered = true;
+    } else if (req.body.action === 'cancel') {
+      order.isCanceled = true;
+    }
+    await order.save();
+
+    res.send({ message: 'Done' });
+  } else {
+    req.status(404).message({ message: 'Order not found' });
+  }
+});
+
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => {
