@@ -66,3 +66,6 @@ Heroku to deploy your web application on cloud servers
     1. build list order api
     2. show order in the screen
     3. create ready, cancel and deliver button
+13. Create Queue Screen
+    1. build list queue order api
+    2. show queue in the screen in 2 columns

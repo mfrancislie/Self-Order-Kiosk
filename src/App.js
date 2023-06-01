@@ -16,6 +16,7 @@ import CompleteOrderScreen from './screens/CompleteOrderScreen';
 import AdminScreen from './screens/AdminScreen';
 import { useContext } from 'react';
 import { Store } from './Store';
+import QueueScreen from './screens/QueueScreen';
 
 function App() {
   const { state } = useContext(Store);
@@ -55,6 +56,7 @@ function App() {
               <Route path="/review" element={<ReviewScreen />} exact={true} />
               <Route path="/payment" element={<PaymentScreen />} exact={true} />
               <Route path="/admin" element={<AdminScreen />} exact={true} />
+              <Route path="/queue" element={<QueueScreen />} exact={true} />
               <Route
                 path="/complete"
                 element={<CompleteOrderScreen />}

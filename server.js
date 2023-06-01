@@ -119,6 +119,20 @@ app.put('/api/orders/:id', async (req, res) => {
   }
 });
 
+// Queue
+app.get('/api/orders/queue', async (req, res) => {
+  const inProgressOrders = await Order.find(
+    { inProgress: true, isCanceled: false },
+    'number'
+  );
+  const servingOrders = await Order.find(
+    { isReady: true, isDelivered: false },
+    'number'
+  );
+
+  res.send({ inProgressOrders, servingOrders });
+});
+
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => {
