@@ -191,7 +191,6 @@ const OrderScreen = () => {
               ) : errorProducts ? (
                 <Alert severity="error">{errorProducts}</Alert>
               ) : (
-                Array.isArray(products) &&
                 products.map((product) => {
                   return (
                     <Grid item md={6}>
