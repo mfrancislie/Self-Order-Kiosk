@@ -21,6 +21,7 @@ import {
   Grid,
   List,
   ListItem,
+  Slide,
   TextField,
   Typography,
 } from '@material-ui/core';
@@ -86,71 +87,73 @@ const OrderScreen = () => {
 
   return (
     <Box className={styles.root}>
-      {/* modal */}
-      <Dialog
-        maxWidth="sm"
-        fullWidth={true}
-        open={isOpen}
-        onClose={closeHandler}
-      >
-        <DialogTitle className={styles.center}>Add {product.name}</DialogTitle>
-        <Box className={[styles.row, styles.center]}>
-          <Button
-            variant="contained"
-            color="primary"
-            disabled={quantity === 1}
-            onClick={(e) => quantity > 1 && setQuantity(quantity - 1)}
-          >
-            <RemoveCircleOutline />
-          </Button>
-          <TextField
-            inputProps={{ className: styles.largeInput }}
-            InputProps={{
-              bar: true,
-              inputProps: {
-                className: styles.largeInput,
-              },
-            }}
-            className={styles.largeNumber}
-            type="number"
-            variant="filled"
-            min={1}
-            value={quantity}
-          />
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={(e) => setQuantity(quantity + 1)}
-          >
-            <AddCircleOutline />
-          </Button>
-        </Box>
-        <Box className={[styles.row, styles.around]}>
-          <Button
-            onClick={cancelOrRemoveFromOrder}
-            variant="contained"
-            color="primary"
-            size="large"
-            className={styles.largeButton}
-          >
-            {orderItems.find((x) => x.name === product.name)
-              ? 'Remove From Order'
-              : 'Cancel'}
-          </Button>
-
-          <Button
-            onClick={addToOrderHandler}
-            variant="contained"
-            color="primary"
-            size="large"
-            className={styles.largeButton}
-          >
-            ADD To Order
-          </Button>
-        </Box>
-      </Dialog>
-      {/* modal end */}
       <Box className={styles.main}>
+        <Dialog
+          onClose={closeHandler}
+          aria-labelledby="max-width-dialog-title"
+          open={isOpen}
+          fullWidth={true}
+          maxWidth="sm"
+        >
+          <DialogTitle className={styles.center}>
+            Add {product.name}
+          </DialogTitle>
+          <Box className={[styles.row, styles.center]}>
+            <Button
+              variant="contained"
+              color="primary"
+              disabled={quantity === 1}
+              onClick={(e) => quantity > 1 && setQuantity(quantity - 1)}
+            >
+              <RemoveCircleOutline />
+            </Button>
+            <TextField
+              inputProps={{ className: styles.largeInput }}
+              InputProps={{
+                bar: true,
+                inputProps: {
+                  className: styles.largeInput,
+                },
+              }}
+              className={styles.largeNumber}
+              type="number"
+              variant="filled"
+              min={1}
+              value={quantity}
+            />
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={(e) => setQuantity(quantity + 1)}
+            >
+              <AddCircleOutline />
+            </Button>
+          </Box>
+          <Box className={[styles.row, styles.around]}>
+            <Button
+              onClick={cancelOrRemoveFromOrder}
+              variant="contained"
+              color="primary"
+              size="large"
+              className={styles.largeButton}
+            >
+              {orderItems.find((x) => x.name === product.name)
+                ? 'Remove From Order'
+                : 'Cancel'}
+            </Button>
+
+            <Button
+              onClick={addToOrderHandler}
+              variant="contained"
+              color="primary"
+              size="large"
+              className={styles.largeButton}
+            >
+              ADD To Order
+            </Button>
+          </Box>
+        </Dialog>
+
         <Grid container>
           <Grid item md={2}>
             <List>
@@ -165,8 +168,8 @@ const OrderScreen = () => {
                   </ListItem>
                   {categories.map((category) => (
                     <ListItem
-                      button
                       key={category.name}
+                      button
                       onClick={() => categoryClickHandler(category.name)}
                     >
                       <Avatar alt={category.name} src={category.image} />
@@ -185,14 +188,15 @@ const OrderScreen = () => {
             >
               {categoryName || 'Main Menu'}
             </Typography>
+
             <Grid container spacing={1}>
               {loadingProducts ? (
                 <CircularProgress />
               ) : errorProducts ? (
                 <Alert severity="error">{errorProducts}</Alert>
               ) : (
-                products.map((product) => {
-                  return (
+                products.map((product) => (
+                  <Slide key={product.name} direction="up" in={true}>
                     <Grid item md={6}>
                       <Card
                         className={styles.card}
@@ -205,43 +209,42 @@ const OrderScreen = () => {
                             image={product.image}
                             className={styles.media}
                           />
-                        </CardActionArea>
-                        <CardContent>
-                          <Typography
-                            gutterBottom
-                            variant="body2"
-                            color="textPrimary"
-                            component="p"
-                          >
-                            {product.name}
-                          </Typography>
-                          <Box className={styles.cardFooter}>
+                          <CardContent>
                             <Typography
-                              variant="body2"
-                              color="textSecondary"
-                              component="p"
-                            >
-                              {product.calorie} Cal
-                            </Typography>
-                            <Typography
+                              gutterBottom
                               variant="body2"
                               color="textPrimary"
                               component="p"
                             >
-                              ${product.price}
+                              {product.name}
                             </Typography>
-                          </Box>
-                        </CardContent>
+                            <Box className={styles.cardFooter}>
+                              <Typography
+                                variant="body2"
+                                color="textSecondary"
+                                component="p"
+                              >
+                                {product.calorie} Cal
+                              </Typography>
+                              <Typography
+                                variant="body2"
+                                color="textPrimary"
+                                component="p"
+                              >
+                                ${product.price}
+                              </Typography>
+                            </Box>
+                          </CardContent>
+                        </CardActionArea>
                       </Card>
                     </Grid>
-                  );
-                })
+                  </Slide>
+                ))
               )}
             </Grid>
           </Grid>
         </Grid>
       </Box>
-      {/* footer */}
       <Box>
         <Box>
           <Box className={[styles.bordered, styles.space]}>
@@ -260,6 +263,7 @@ const OrderScreen = () => {
             >
               Cancel Order
             </Button>
+
             <Button
               onClick={previewOrderHandler}
               variant="contained"
@@ -272,7 +276,6 @@ const OrderScreen = () => {
           </Box>
         </Box>
       </Box>
-      {/* end-footer */}
     </Box>
   );
 };
