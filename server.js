@@ -56,9 +56,7 @@ app.post('/api/products', async (req, res) => {
   res.send(savedProduct);
 });
 
-app.get('/api/categories', (req, res) => {
-  res.send(data.categories);
-});
+app.get('/api/categories', (req, res) => res.send(data.categories));
 
 const Order = mongoose.model(
   'Order',
