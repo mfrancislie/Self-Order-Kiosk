@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 const HomeScreen = () => {
   const styles = useStyles();
   const navigate = useNavigate();
-  
+
   return (
     <Card>
       <CardActionArea onClick={() => navigate('/choose')}>
