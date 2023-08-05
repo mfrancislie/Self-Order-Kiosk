@@ -26,7 +26,6 @@ import {
   Typography,
 } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
-import Logo from '../components/Logo';
 import { Store } from '../Store';
 import { AddCircleOutline, RemoveCircleOutline } from '@material-ui/icons';
 import { useNavigate } from 'react-router-dom';
@@ -160,10 +159,7 @@ const OrderScreen = () => {
               ) : error ? (
                 <Alert severity="error">{error}</Alert>
               ) : (
-                <>
-                  <ListItem button onClick={() => categoryClickHandler('')}>
-                    <Logo></Logo>
-                  </ListItem>
+                <>   
                   {categories.map((category) => (
                     <ListItem
                       button
