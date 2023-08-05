@@ -21,11 +21,11 @@ import {
   Grid,
   List,
   ListItem,
-  Slide,
   TextField,
   Typography,
 } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
+import Logo from '../components/Logo';
 import { Store } from '../Store';
 import { AddCircleOutline, RemoveCircleOutline } from '@material-ui/icons';
 import { useNavigate } from 'react-router-dom';
@@ -159,7 +159,10 @@ const OrderScreen = () => {
               ) : error ? (
                 <Alert severity="error">{error}</Alert>
               ) : (
-                <>   
+                <>
+                  <ListItem button onClick={() => categoryClickHandler('')}>
+                    <Logo></Logo>
+                  </ListItem>
                   {categories.map((category) => (
                     <ListItem
                       button
@@ -189,49 +192,47 @@ const OrderScreen = () => {
                 <Alert severity="error">{errorProducts}</Alert>
               ) : (
                 products.map((product) => (
-                  <Slide key={product.name} direction="up" in={true}>
-                    <Grid item md={6}>
-                      <Card
-                        className={styles.card}
-                        onClick={() => productClickHandler(product)}
-                      >
-                        <CardActionArea>
-                          <CardMedia
-                            component="img"
-                            alt={product.name}
-                            image={product.image}
-                            className={styles.media}
-                          />
-                        </CardActionArea>
-                        <CardContent>
+                  <Grid item md={6}>
+                    <Card
+                      className={styles.card}
+                      onClick={() => productClickHandler(product)}
+                    >
+                      <CardActionArea>
+                        <CardMedia
+                          component="img"
+                          alt={product.name}
+                          image={product.image}
+                          className={styles.media}
+                        />
+                      </CardActionArea>
+                      <CardContent>
+                        <Typography
+                          gutterBottom
+                          variant="body2"
+                          color="textPrimary"
+                          component="p"
+                        >
+                          {product.name}
+                        </Typography>
+                        <Box className={styles.cardFooter}>
                           <Typography
-                            gutterBottom
+                            variant="body2"
+                            color="textSecondary"
+                            component="p"
+                          >
+                            {product.calorie} Cal
+                          </Typography>
+                          <Typography
                             variant="body2"
                             color="textPrimary"
                             component="p"
                           >
-                            {product.name}
+                            ${product.price}
                           </Typography>
-                          <Box className={styles.cardFooter}>
-                            <Typography
-                              variant="body2"
-                              color="textSecondary"
-                              component="p"
-                            >
-                              {product.calorie} Cal
-                            </Typography>
-                            <Typography
-                              variant="body2"
-                              color="textPrimary"
-                              component="p"
-                            >
-                              ${product.price}
-                            </Typography>
-                          </Box>
-                        </CardContent>
-                      </Card>
-                    </Grid>
-                  </Slide>
+                        </Box>
+                      </CardContent>
+                    </Card>
+                  </Grid>
                 ))
               )}
             </Grid>
