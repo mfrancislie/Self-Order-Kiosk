@@ -40,9 +40,9 @@ const OrderScreen = () => {
   const [product, setProduct] = useState({});
 
   const { state, dispatch } = useContext(Store);
-  const { loading, categories = [], error } = state.categoryList;
+  const { loading, categories, error } = state.categoryList;
   const {
-    products = [],
+    products,
     loading: loadingProducts,
     error: errorProducts,
   } = state.productList;
@@ -163,7 +163,7 @@ const OrderScreen = () => {
                   <ListItem button onClick={() => categoryClickHandler('')}>
                     <Logo></Logo>
                   </ListItem>
-                  {categories.map((category) => (
+                  {(categories || []).map((category) => (
                     <ListItem
                       key={category.name}
                       button
