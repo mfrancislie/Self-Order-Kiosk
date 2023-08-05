@@ -40,7 +40,7 @@ const OrderScreen = () => {
   const [product, setProduct] = useState({});
 
   const { state, dispatch } = useContext(Store);
-  const { loading, categories, error } = state.categoryList;
+  const { loading, categories = [], error } = state.categoryList;
   const {
     products,
     loading: loadingProducts,
