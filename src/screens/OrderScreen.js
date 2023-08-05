@@ -21,6 +21,7 @@ import {
   Grid,
   List,
   ListItem,
+  Slide,
   TextField,
   Typography,
 } from '@material-ui/core';
@@ -192,47 +193,49 @@ const OrderScreen = () => {
                 <Alert severity="error">{errorProducts}</Alert>
               ) : (
                 products.map((product) => (
-                  <Grid item md={6}>
-                    <Card
-                      className={styles.card}
-                      onClick={() => productClickHandler(product)}
-                    >
-                      <CardActionArea>
-                        <CardMedia
-                          component="img"
-                          alt={product.name}
-                          image={product.image}
-                          className={styles.media}
-                        />
-                      </CardActionArea>
-                      <CardContent>
-                        <Typography
-                          gutterBottom
-                          variant="body2"
-                          color="textPrimary"
-                          component="p"
-                        >
-                          {product.name}
-                        </Typography>
-                        <Box className={styles.cardFooter}>
+                  <Slide key={product.name} direction="up" in={true}>
+                    <Grid item md={6}>
+                      <Card
+                        className={styles.card}
+                        onClick={() => productClickHandler(product)}
+                      >
+                        <CardActionArea>
+                          <CardMedia
+                            component="img"
+                            alt={product.name}
+                            image={product.image}
+                            className={styles.media}
+                          />
+                        </CardActionArea>
+                        <CardContent>
                           <Typography
-                            variant="body2"
-                            color="textSecondary"
-                            component="p"
-                          >
-                            {product.calorie} Cal
-                          </Typography>
-                          <Typography
+                            gutterBottom
                             variant="body2"
                             color="textPrimary"
                             component="p"
                           >
-                            ${product.price}
+                            {product.name}
                           </Typography>
-                        </Box>
-                      </CardContent>
-                    </Card>
-                  </Grid>
+                          <Box className={styles.cardFooter}>
+                            <Typography
+                              variant="body2"
+                              color="textSecondary"
+                              component="p"
+                            >
+                              {product.calorie} Cal
+                            </Typography>
+                            <Typography
+                              variant="body2"
+                              color="textPrimary"
+                              component="p"
+                            >
+                              ${product.price}
+                            </Typography>
+                          </Box>
+                        </CardContent>
+                      </Card>
+                    </Grid>
+                  </Slide>
                 ))
               )}
             </Grid>
