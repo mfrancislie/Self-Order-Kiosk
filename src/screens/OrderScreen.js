@@ -163,7 +163,7 @@ const OrderScreen = () => {
                   <ListItem button onClick={() => categoryClickHandler('')}>
                     <Logo></Logo>
                   </ListItem>
-                  {categories || [].map((category) => (
+                  {categories.map((category) => (
                     <ListItem
                       key={category.name}
                       button
