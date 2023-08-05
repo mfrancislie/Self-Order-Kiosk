@@ -10,9 +10,21 @@ app.use(express.urlencoded({ extended: true }));
 
 dotenv.config();
 
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
+mongoose.set('strictQuery', true);
+const connect = async () => {
+  try {
+    mongoose.connect(process.env.MONGODB_URI);
+    console.log('Connect to mongoDB');
+  } catch (error) {
+    throw error;
+  }
+};
+
+mongoose.connection.on('disconnected', () => {
+  console.log('mongoDb disconnected');
+});
+mongoose.connection.on('Connected', () => {
+  console.log('mongoDb connected');
 });
 
 const Product = mongoose.model(
@@ -136,5 +148,6 @@ app.get('/api/orders/queue', async (req, res) => {
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => {
+  connect();
   console.log(`serve at http://localhost:${port}`);
 });
