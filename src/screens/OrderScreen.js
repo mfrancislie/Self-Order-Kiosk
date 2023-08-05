@@ -159,11 +159,14 @@ const OrderScreen = () => {
               ) : error ? (
                 <Alert severity="error">{error}</Alert>
               ) : (
-                <>   
+                 <>
+                  <ListItem button onClick={() => categoryClickHandler('')}>
+                    <Logo></Logo>
+                  </ListItem>
                   {categories.map((category) => (
                     <ListItem
-                      button
                       key={category.name}
+                      button
                       onClick={() => categoryClickHandler(category.name)}
                     >
                       <Avatar alt={category.name} src={category.image} />
