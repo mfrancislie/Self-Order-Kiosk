@@ -38,23 +38,9 @@ const Product = mongoose.model(
     category: String,
   })
 );
-const Category = mongoose.model(
-  'categories',
-  new mongoose.Schema({
-    name: String,
-    image: String,
-  })
-);
-
-app.get('/api/categories/seed', async (req, res) => {
-  await Category.deleteMany({});
-  const categories = await Category.insertMany(data.categories);
-  res.send({ categories });
-});
 
 app.get('/api/categories', async (req, res) => {
-  const categories = await Category.find();
-  res.send(categories);
+  res.send(data.categories);
 });
 
 app.get('/api/products/seed', async (req, res) => {
