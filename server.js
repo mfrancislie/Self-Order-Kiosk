@@ -2,6 +2,7 @@ const express = require('express');
 const data = require('./data');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const path = require('path');
 
 dotenv.config();
 
@@ -152,6 +153,12 @@ app.get('/api/orders/queue', async (req, res) => {
 app.delete('/api/orders/:id', async (req, res) => {
   const order = await Order.findByIdAndDelete(req.params.id);
   res.send(order);
+});
+
+const dirname = path.resolve();
+app.use('/', express.static(path.join(dirname, +'/build/index.html')));
+app.get('/', (req, res) => {
+  res.sendFile(path.join(dirname, '/build/index.html'));
 });
 
 const port = process.env.PORT || 5000;
