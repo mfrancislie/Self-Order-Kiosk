@@ -3,16 +3,28 @@ const data = require('./data');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
+dotenv.config();
+
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-dotenv.config();
-mongoose.set('strictQuery', false);
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
+mongoose.set('strictQuery', true);
+const connect = async () => {
+  try {
+    mongoose.connect(process.env.MONGODB_URI);
+    console.log('Connect to mongoDB');
+  } catch (error) {
+    throw error;
+  }
+};
+
+mongoose.connection.on('disconnected', () => {
+  console.log('mongoDb disconnected');
+});
+mongoose.connection.on('Connected', () => {
+  console.log('mongoDb connected');
 });
 
 const Product = mongoose.model(
@@ -27,16 +39,19 @@ const Product = mongoose.model(
   })
 );
 
-app.get('/api/products/seed', async (req, res) => {
-  await Product.deleteMany({});
-  const products = await Product.insertMany(data.products);
-  res.send({ products });
+app.get('/api/categories', async (req, res) => {
+  res.send(data.categories);
 });
-
 app.get('/api/products', async (req, res) => {
   const { category } = req.query;
   const products = await Product.find(category ? { category } : {});
   res.send(products);
+});
+
+app.get('/api/products/seed', async (req, res) => {
+  await Product.deleteMany({});
+  const products = await Product.insertMany(data.products);
+  res.send({ products });
 });
 
 app.post('/api/products', async (req, res) => {
@@ -45,8 +60,9 @@ app.post('/api/products', async (req, res) => {
   res.send(savedProduct);
 });
 
-app.get('/api/categories', (req, res) => {
-  res.send(data.categories);
+app.delete('/api/products/:id', async (req, res) => {
+  const deletedProduct = await Product.findByIdAndDelete(req.params.id);
+  res.send(deletedProduct);
 });
 
 const Order = mongoose.model(
@@ -133,8 +149,14 @@ app.get('/api/orders/queue', async (req, res) => {
   res.send({ inProgressOrders, servingOrders });
 });
 
+app.delete('/api/orders/:id', async (req, res) => {
+  const order = await Order.findByIdAndDelete(req.params.id);
+  res.send(order);
+});
+
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => {
+  connect();
   console.log(`serve at http://localhost:${port}`);
 });
